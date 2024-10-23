@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Độc quyền của Thiên</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black; /* Đảm bảo nền toàn bộ là đen */
+        }
+        canvas {
+            display: block;
+            width: 100vw; /* Chiếm toàn bộ chiều rộng màn hình */
+            height: 100vh; /* Chiếm toàn bộ chiều cao màn hình */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Cập nhật kích thước canvas để phù hợp với màn hình
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const text = "Em Yêu Anh";
+        let x = canvas.width; // Vị trí bắt đầu
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = '74px UVNDinhHon'; // Thay font nếu cần
+            
+            // Tính toán để chữ nằm giữa chiều cao màn hình
+            const textWidth = ctx.measureText(text).width;
+            const textX = (canvas.width - textWidth) / 2; // Tính tọa độ X để chữ ở giữa
+
+            // Tạo gradient cho chữ
+            const gradient = ctx.createLinearGradient(x, 0, x + textWidth, 0);
+            gradient.addColorStop(0, 'pink'); // Màu bắt đầu
+            gradient.addColorStop(1, 'purple'); // Màu kết thúc
+
+            ctx.fillStyle = gradient; // Áp dụng gradient
+
+            ctx.fillText(text, x, canvas.height / 2); // Vẽ chữ ở giữa màn hình
+
+            // Cập nhật vị trí chữ
+            x -= 3; // Giảm tốc độ di chuyển (chạy chậm lại)
+            if (x < -textWidth) {
+                x = canvas.width; // Đặt lại vị trí khi chữ ra khỏi màn hình
+            }
+
+            requestAnimationFrame(draw); // Gọi lại hàm draw
+        }
+
+        draw(); // Bắt đầu vẽ
+    </script>
+</body>
+</html>
